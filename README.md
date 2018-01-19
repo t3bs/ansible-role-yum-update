@@ -7,7 +7,7 @@ Ansible role that upgrade all packages and REBOOTS SERVER if Kernel was upgraded
 ```yaml
 
 - name: "Update all yum Packages"
-  hosts: centos7
+  hosts: rhel7
   become: true
   become_method: sudo
 
