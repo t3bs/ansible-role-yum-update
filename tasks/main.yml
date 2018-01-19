@@ -1,0 +1,23 @@
+---
+
+    - name: upgrade all packages
+      yum: name=* state=latest
+
+    - name: Check for reboot hint to update Kernel
+      shell: if [ $(rpm -q --last kernel | awk 'NR==1 {print $1}') != kernel-$(uname -r) ]; then echo 'reboot'; else echo 'Kernel is current'; fi
+      ignore_errors: true
+      register: reboot_hint
+
+    - name: Rebooting Server to update Kernel ...
+      command: shutdown -r now "Reboot required for updated kernel"
+      async: 0
+      poll: 0
+      #sudo: true
+      ignore_errors: true
+      when: reboot_hint.stdout.find("reboot") != -1
+      register: rebooting
+
+    - name: Wait for host to reboot...
+      pause: seconds=45
+      when: rebooting|changed
+
