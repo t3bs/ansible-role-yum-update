@@ -1,6 +1,6 @@
 # Ansible Role: yum-update
 
-Ansible role that upgrade all packages and REBOOTS SERVER if Kernel was upgraded
+Ansible role that upgrades all packages and REBOOTS node if Kernel was upgraded
 
 ## Playbook Example
 
